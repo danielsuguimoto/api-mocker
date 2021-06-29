@@ -1,3 +1,13 @@
+/.env
+/dist/
+
+# IDE
+.vscode/
+.idea
+*.iws
+*.iml
+*.ipr
+
 # Binaries for programs and plugins
 *.exe
 *.exe~
