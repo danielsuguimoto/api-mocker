@@ -1,15 +1,26 @@
 package main
 
 import (
-	"github.com/gofiber/fiber/v2"
+	"fmt"
+	"os"
+
+	"github.com/danielsuguimoto/api-mocker/server"
 )
 
 func main() {
-	app := fiber.New()
+	if len(os.Args) <= 1 {
+		fmt.Fprint(os.Stderr, "error: resources json file is required.")
+		os.Exit(2)
+	}
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello world")
-	})
+	resourcesFilePath := os.Args[1];
 
-	app.Listen(":3000")
+	server := server.Create()
+
+	if err := server.LoadResources(resourcesFilePath); err != nil {
+		fmt.Fprintf(os.Stderr, "error: %v", err)
+		os.Exit(1)
+	}
+
+	server.Listen(3000)
 }
