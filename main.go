@@ -15,12 +15,14 @@ func main() {
 
 	resourcesFilePath := os.Args[1];
 
-	server := server.Create()
+	server := server.Create(3000)
 
 	if err := server.LoadResources(resourcesFilePath); err != nil {
 		fmt.Fprintf(os.Stderr, "error: %v", err)
 		os.Exit(1)
 	}
 
-	server.Listen(3000)
+	server.Listen()
+
+	server.WatchResource(resourcesFilePath)
 }
